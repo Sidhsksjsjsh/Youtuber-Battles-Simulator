@@ -40,6 +40,48 @@ OrionLib:AddTable(workspace.Eggs,Egglist)
 OrionLib:AddTable(workspace.Bots,Bot)
 OrionLib:AddTable(workspace.Train,PC)
 
+T5:AddDropdown({
+   Name = "Select World (1 = world 1)",
+   Default = "1",
+   Options = Bot,
+   Callback = function(Value)
+      _G._GetShitName3 = Value
+    end
+  })
+
+T5:AddDropdown({
+   Name = "Select Tier",
+   Default = "Easy",
+   Options = {"Easy","Hard","Extreme","Final"},
+   Callback = function(Value)
+      _G._GetShitTier = Value
+    end
+  })
+
+T5:AddToggle({
+  Name = "Auto Fight",
+  Default = false,
+  Callback = function(Value)
+      _G._RaceForShit = Value
+      while wait() do
+        if _G._RaceForShit == false then break end
+           game:GetService("ReplicatedStorage")["Events"]["RaceEvent"]:FireServer("race",workspace.Bots[_G._GetShitName3][_G._GetShitTier])
+      end
+    end
+  })
+
+T5:AddToggle({
+  Name = "Fast Mode ( Dont Click Anything )",
+  Default = false,
+  Callback = function(Value)
+      _G._FastShit = Value
+      while wait() do
+        if _G._FastShit == false then break end
+           game:GetService("ReplicatedStorage")["Events"]["RaceEvent"]:FireServer("won")
+      end
+    end
+  })
+
 T4:AddDropdown({
    Name = "Select World",
    Default = "World1",
