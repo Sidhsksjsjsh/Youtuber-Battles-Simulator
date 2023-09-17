@@ -8,6 +8,18 @@ Icon = "rbxassetid://4483345998",
 PremiumOnly = false
 })
 
+local T4 = Window:MakeTab({
+Name = "Train",
+Icon = "rbxassetid://4483345998",
+PremiumOnly = false
+})
+
+local T5 = Window:MakeTab({
+Name = "Fight",
+Icon = "rbxassetid://4483345998",
+PremiumOnly = false
+})
+
 local T2 = Window:MakeTab({
 Name = "Eggs & Pets",
 Icon = "rbxassetid://4483345998",
@@ -22,9 +34,34 @@ PremiumOnly = false
 
 local workspace = game:GetService("Workspace")
 local Egglist = {}
+local Bot = {}
+local PC = {}
 OrionLib:AddTable(workspace.Eggs,Egglist)
+OrionLib:AddTable(workspace.Bots,Bot)
+OrionLib:AddTable(workspace.Train,PC)
 
-T1:AddToggle({
+T4:AddDropdown({
+   Name = "Select World",
+   Default = "World1",
+   Options = PC,
+   Callback = function(Value)
+      _G._GetShitName2 = Value
+    end
+  })
+
+T4:AddToggle({
+  Name = "Auto Train",
+  Default = false,
+  Callback = function(Value)
+      _G._TrainShit = Value
+      while wait() do
+        if _G._TrainShit == false then break end
+           game:GetService("ReplicatedStorage")["Events"]["TrainEvent"]:FireServer("start",workspace.Train[_G._GetShitName2][_G._GetShitName2:gsub("W",""):gsub("o",""):gsub("r",""):gsub("l",""):gsub("d","")])
+      end
+    end
+  })
+
+T4:AddToggle({
   Name = "Auto Click",
   Default = false,
   Callback = function(Value)
@@ -128,7 +165,7 @@ T2:AddToggle({
     end
   })
 
-Tab:AddButton({
+T3:AddButton({
    Name = "Redeem all codes (1 codes detected)",
    Callback = function()
       game:GetService("ReplicatedStorage")["Events"]["CodeEvent"]:FireServer("RELEASE")
